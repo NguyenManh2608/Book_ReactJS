@@ -5,8 +5,8 @@ export const publisherApi = store => next => action => {
         axios.get('/publishers')
             .then(res => {
                 next({
-                    type: GET_PUBLISHERS,
-                    publishers: res.data
+                    type        : GET_PUBLISHERS,
+                    publishers  : res.data
                 })
             })
     } else {

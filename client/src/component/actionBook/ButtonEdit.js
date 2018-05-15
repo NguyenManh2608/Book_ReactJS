@@ -22,7 +22,7 @@ export default class ButtonEdit extends Component {
         return (
             <div>
                 <button color="danger" onClick={this.toggle}>{this.state.valueButton}</button>
-                <ModalComponent isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>{this.state.valueButton}</ModalComponent>
+                <ModalComponent id={this.props.id} action="Edit" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>{this.state.valueButton}</ModalComponent>
             </div>
         );
     }

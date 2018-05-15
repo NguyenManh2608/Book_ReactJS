@@ -20,5 +20,7 @@ function makeCondition(request) {
         return new UndeletedSearchCondition();
     } else if(request.path.toString().startsWith('/book/') || request.path.toString().startsWith('/bookEdit/')) {
         return new IdSearchCondition(request.params.id);
+    } else if (request.path.toString().startsWith('/search-basic')){
+        return new KeywordSearchCondition(request.query.keyword);
     }
 }

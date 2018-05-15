@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-import {Col, Row, Table} from 'reactstrap';
+import { Table } from 'semantic-ui-react'
 import {connect} from 'react-redux';
 import {loadBook} from "../redux/Actions";
 import PopoverComponent from "./PopoverComponent";
 import ButtonComponent from "./actionBook/ButtonComponent";
+import {Col, Row} from "reactstrap";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -26,7 +26,19 @@ class TableComponent extends Component {
        super(props);
        this.state = {
            publisherName:'',
-           book:[],
+           book:[
+                   {
+                       title: "learn cards",
+                       author:"Twitter Fate",
+                       publisher: {
+                           id: 1,
+                           name: "League of Legends",
+                           address: "Garena",
+                           phone: "0189885596"
+                       },
+                       price: 222
+                   }
+               ],
            popoverOpen: false,
        }
    }
@@ -36,14 +48,6 @@ class TableComponent extends Component {
    }
 
 
-   showBook(id){
-        axios.get('/book/'+id)
-            .then(res => {
-                let book = res.data[0];
-               this.setState({book: book, publisherName: book.publisher.name});
-            });
-   }
-
    toggle() {
        this.setState({
             popoverOpen: !this.state.popoverOpen
@@ -51,44 +55,45 @@ class TableComponent extends Component {
    }
 
     render() {
-        this.props.loadBook();
+        // this.props.loadBook();
         return(
 
-            <Table striped>
-
-                <thead>
-                <tr>
-                    <th scope="row">Id</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                    <th>Price</th>
-                    <th>
-                        <Row>
-                            <Col xs="6">Action</Col>
-                        </Row>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
+            <Table unstackable>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell scope="row">Id</Table.HeaderCell>
+                        <Table.HeaderCell>Title</Table.HeaderCell>
+                        <Table.HeaderCell>Author</Table.HeaderCell>
+                        <Table.HeaderCell>Publisher</Table.HeaderCell>
+                        <Table.HeaderCell>Price</Table.HeaderCell>
+                        <Table.HeaderCell>
+                            <Row>
+                                <Col xs="6">Action</Col>
+                            </Row>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
                 {this.props.books.map(book =>
-                    <tr key={book.id}>
-                        <td>{book.id}</td>
-                        <td><a id="Popover" onClick={() => {
+                    <Table.Row key={book.id}>
+                        <Table.Cell key={book.id}>{book.id}</Table.Cell>
+                        <Table.Cell><a id="Popover" onClick={() => {
                             this.showBook(book.id);
                             this.toggle();
-                        }}>{book.title}</a></td>
+                        }}>{book.title}</a></Table.Cell>
                         <PopoverComponent publisherName={this.state.publisherName} book={this.state.book} isOpen={this.state.popoverOpen} target={'Popover'} toggle={this.toggle.bind(this)}/>
-                        <td>{book.author}</td>
-                        <td>{book.publisher.name}</td>
-                        <td>{book.price}</td>
-                        <td>
+                        <Table.Cell>{book.author}</Table.Cell>
+                        <Table.Cell>{book.publisher.name}</Table.Cell>
+                        <Table.Cell>{book.price}</Table.Cell>
+                        <Table.Cell textAlign='right'>
                              <ButtonComponent id={book.id}/>
-                        </td>
-                    </tr>
+                        </Table.Cell>
+                    </Table.Row>
                 )}
-                </tbody>
+                </Table.Body>
             </Table>
+
+
         )
     }
 }

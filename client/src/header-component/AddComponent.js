@@ -41,7 +41,7 @@ const mapStateToProps = state => {
         return (
             <div>
                 <Button onClick={this.toggle}>{this.props.children}</Button>
-                <ModalComponent isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>{this.state.valueButton}</ModalComponent>
+                <ModalComponent action="add" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>{this.state.valueButton}</ModalComponent>
             </div>
         );
     }
